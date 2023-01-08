@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="BBit">
+  <link 
+    rel="icon" 
+    href="/">
+  <title>Install Ruby On Rails on macOS</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="Install Ruby On Rails on macOS">
+    
+    
+      <meta 
+        property="og:url" 
+        content="https://bbit.wankv.com/2023/01/08/install-ruby-on-rails-on-macos/index.html">
+    
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-01-08">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-01-08">
+      <meta 
+        property="og:article:author" 
+        content="YL">
+      
+        
+          <meta 
+            property="og:article:tag" 
+            content="Rails">
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+      <span class="navbar-logo-dsc">BBit</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          Home
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          Archive
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          Tags
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          Categories
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          Friends
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+
+
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>1</span>
+    <span>Posts</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>1</span>
+    <span>Categories</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>1</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Overview"><span class="toc-text">Overview</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-ZSH-in-your-Terminal"><span class="toc-text">Using ZSH in your Terminal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Homebrew"><span class="toc-text">Installing Homebrew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Ruby"><span class="toc-text">Installing Ruby</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Rails"><span class="toc-text">Installing Rails</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-A-Database"><span class="toc-text">Setting Up A Database</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL"><span class="toc-text">MySQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PostgreSQL"><span class="toc-text">PostgreSQL</span></a>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>Categories
+  </div>
+  <div class="categories-list">
+    
+      <a href="/categories/Rails/">
+        <div class="categories-list-item">
+          Rails
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>hot tags
+  </div>
+  <div class="tags-list">
+    
+      <a 
+        href="/tags/Rails/" 
+        title="Rails">
+        <div class="tags-list-item">Rails</div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      Install Ruby On Rails on macOS
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-01-08T17:42:21.819Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-01-08</span>
+    </time>
+    
+      <span class="dot"></span>
+      
+        <a 
+          href="/categories/Rails/" 
+          class="post-meta-link">
+          Rails
+        </a>
+      
+    
+    
+      <span class="dot"></span>
+      <span>725 words</span>
+    
+  </div>
+  
+    <div 
+      class="post-meta post-show-meta" 
+      style="margin-top: -10px;">
+      <div style="display: flex; align-items: center;">
+        <i 
+          class="iconfont icon-biaoqian" 
+          style="margin-right: 2px; font-size: 1.15rem;">
+        </i>
+        
+          
+          <a 
+            href="/tags/Rails/" 
+            class="post-meta-link">
+            Rails
+          </a>
+        
+      </div>
+    </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <h5 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h5><p>We will be setting up a Ruby on Rails development environment on macOS.</p>
+<p>Older versions of OS are mostly compatible so follow along as far as you can and then Google search for any problems you run into. There are plenty of people who have documented solutions for them.</p>
+<h2 id="Using-ZSH-in-your-Terminal"><a href="#Using-ZSH-in-your-Terminal" class="headerlink" title="Using ZSH in your Terminal"></a>Using ZSH in your Terminal</h2><p>MacOS Catalina has changed the default terminal from Bash to ZSH. As a result, we’ll be adding configs to <code>~/.zshrc</code> instead of <code>~/.bash_profile</code> like we used in the past.</p>
+<p>You can manually change from Bash to ZSH anytime by running the following command:</p>
+<pre class="highlight"><span class="line">chsh -s /bin/zsh</span><br></pre>
+
+<h2 id="Installing-Homebrew"><a href="#Installing-Homebrew" class="headerlink" title="Installing Homebrew"></a>Installing Homebrew</h2><p>First, we need to install <a target="_blank" rel="noopener" href="https://brew.sh/">Homebrew</a>. Homebrew allows us to install and compile software packages easily from source.</p>
+<p>Homebrew comes with a very simple install script. When it asks you to install XCode CommandLine Tools, say yes.</p>
+<p>Open Terminal and run the following command:</p>
+<pre class="highlight"><span class="line">/bin/bash -c <span class="string">&quot;<span class="subst">$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span>&quot;</span></span><br></pre>
+
+<h2 id="Installing-Ruby"><a href="#Installing-Ruby" class="headerlink" title="Installing Ruby"></a>Installing Ruby</h2><p>Now that we have Homebrew installed, we can use it to install Ruby.</p>
+<p>We’re going to use <a target="_blank" rel="noopener" href="https://rvm.io/">rvm</a> to install and manage our Ruby versions.</p>
+<p>Install GPG keys</p>
+<pre class="highlight"><span class="line">gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB</span><br></pre>
+
+<p>Install RVM:</p>
+<pre class="highlight"><span class="line">curl -sSL https://get.rvm.io | bash -s stable</span><br></pre>
+
+<p>To install Ruby and set the default version, we’ll run the following commands:</p>
+<pre class="highlight"><span class="line">rvm install 3.2.0</span><br></pre>
+
+<p>Confirm the default Ruby version matches the version you just installed.</p>
+<pre class="highlight"><span class="line">ruby -v</span><br></pre>
+
+<p>Setting the new default ruby</p>
+<pre class="highlight"><span class="line">rvm --default use 3.2.1</span><br><span class="line">ruby -v</span><br><span class="line">ruby 3.2.1p76 (2014-02-24 revision 45161) [x86_64-darwin12.0]</span><br></pre>
+
+<h2 id="Installing-Rails"><a href="#Installing-Rails" class="headerlink" title="Installing Rails"></a>Installing Rails</h2><p>Installing Rails is as simple as running the following command in your Terminal:</p>
+<pre class="highlight"><span class="line">gem install rails -v 7.0.4</span><br></pre>
+
+<p>And now we can verify Rails is installed:</p>
+<pre class="highlight"><span class="line">rails -v</span><br><span class="line"># Rails 7.0.4</span><br></pre>
+
+<h2 id="Setting-Up-A-Database"><a href="#Setting-Up-A-Database" class="headerlink" title="Setting Up A Database"></a>Setting Up A Database</h2><p>We’re going to install sqlite3 from homebrew because we can’t use the built-in version with macOS Sierra without running into some troubles.</p>
+<pre class="highlight"><span class="line">brew install sqlite3</span><br></pre>
+
+<p>Rails ships with sqlite3 as the default database. Chances are you won’t want to use it because it’s stored as a simple file on disk. You’ll probably want something more robust like MySQL or PostgreSQL.</p>
+<p>There is a lot of documentation on both, so you can just pick one that seems like you’ll be more comfortable with.</p>
+<p>If you’re new to Ruby on Rails or databases in general, I strongly recommend <a target="_blank" rel="noopener" href="https://gorails.com/setup/macos/13-ventura#postgresql">setting up PostgreSQL</a>.</p>
+<p>If you’re coming from PHP, you may already be familiar with MySQL.</p>
+<h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><p>You can install <a target="_blank" rel="noopener" href="https://www.mysql.com/">MySQL</a> server and client from Homebrew:</p>
+<pre class="highlight"><span class="line">brew install mysql</span><br></pre>
+
+<p>Once this command is finished, it gives you a couple commands to run. Follow the instructions and run them:</p>
+<pre class="highlight"><span class="line"><span class="comment"># To have launchd start mysql at login:</span></span><br><span class="line">brew services start mysql</span><br></pre>
+
+<p>By default the mysql user is <code>root</code> with no password.</p>
+<p>When you’re finished, you can <a target="_blank" rel="noopener" href="https://gorails.com/setup/macos/13-ventura#final-steps">skip to the Final Steps</a>.</p>
+<h3 id="PostgreSQL"><a href="#PostgreSQL" class="headerlink" title="PostgreSQL"></a>PostgreSQL</h3><p>You can install <a target="_blank" rel="noopener" href="https://www.postgresql.org/">PostgreSQL</a> server and client from Homebrew:</p>
+<pre class="highlight"><span class="line">brew install postgresql</span><br></pre>
+
+<p>Once this command is finished, it gives you a couple commands to run. Follow the instructions and run them:</p>
+<pre class="highlight"><span class="line"><span class="comment"># To have launchd start postgresql at login:</span></span><br><span class="line">brew services start postgresql</span><br></pre>
+
+<p>By default the postgresql user is your current macOS username with no password. For example, my macOS user is named <code>chris</code> so I can login to postgresql with that username.</p>
+<p>And now for the moment of truth. Let’s create your first Rails application:</p>
+<pre class="highlight"><span class="line">rails new myapp</span><br><span class="line"></span><br><span class="line"><span class="comment">#### If you want to use MySQL</span></span><br><span class="line">rails new myapp -d mysql</span><br><span class="line"></span><br><span class="line"><span class="comment">#### If you want to use Postgres</span></span><br><span class="line"><span class="comment"># Note you will need to change config/database.yml&#x27;s username to be</span></span><br><span class="line"><span class="comment"># the same as your macOS user account. (for example, mine is &#x27;chris&#x27;)</span></span><br><span class="line">rails new myapp -d postgresql</span><br><span class="line"></span><br><span class="line"><span class="comment"># Move into the application directory</span></span><br><span class="line"><span class="built_in">cd</span> myapp</span><br><span class="line"></span><br><span class="line"><span class="comment"># If you setup MySQL or Postgres with a username/password, modify the</span></span><br><span class="line"><span class="comment"># config/database.yml file to contain the username/password that you specified</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Create the database</span></span><br><span class="line">rake db:create</span><br><span class="line"></span><br><span class="line">rails server</span><br></pre>
+
+<p>You can now visit <a target="_blank" rel="noopener" href="http://localhost:3000/">http://localhost:3000</a> to view your new website!</p>
+<p>Now that you’ve got your machine setup, it’s time to start building some Rails applications.</p>
+<p>If you received an error that said <code>Access denied for user &#39;root&#39;@&#39;localhost&#39; (using password: NO)</code> then you need to update your config&#x2F;database.yml file to match the database username and password.</p>
+
+  </div>
+  <div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Overview"><span class="toc-text">Overview</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-ZSH-in-your-Terminal"><span class="toc-text">Using ZSH in your Terminal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Homebrew"><span class="toc-text">Installing Homebrew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Ruby"><span class="toc-text">Installing Ruby</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Rails"><span class="toc-text">Installing Rails</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-A-Database"><span class="toc-text">Setting Up A Database</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL"><span class="toc-text">MySQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PostgreSQL"><span class="toc-text">PostgreSQL</span></a>
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-5"><a class="toc-link" href="#Overview"><span class="toc-text">Overview</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-ZSH-in-your-Terminal"><span class="toc-text">Using ZSH in your Terminal</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Homebrew"><span class="toc-text">Installing Homebrew</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Ruby"><span class="toc-text">Installing Ruby</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Rails"><span class="toc-text">Installing Rails</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-Up-A-Database"><span class="toc-text">Setting Up A Database</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL"><span class="toc-text">MySQL</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PostgreSQL"><span class="toc-text">PostgreSQL</span></a>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>Recent Posts
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-01-08</div>
+        <a href="/2023/01/08/install-ruby-on-rails-on-macos/"><div class="recent-posts-item-content">Install Ruby On Rails on macOS</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020
+          
+          
+                - 
+                2023
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          BBit
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://hexo.io/" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;Hexo
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Theme -
+          <a 
+            href="https://github.com/theme-kaze" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;Kaze
+          </a>
+        
+      </div>
+    
+    
+    
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+  </body>
+</html>
