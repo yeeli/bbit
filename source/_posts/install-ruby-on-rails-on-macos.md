@@ -1,5 +1,6 @@
 ---
 title: Install Ruby On Rails on macOS
+date: 2023-01-10 15:01:32
 categories:
 - Rails
 tags:
