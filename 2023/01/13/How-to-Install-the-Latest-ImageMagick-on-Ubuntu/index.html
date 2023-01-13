@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta 
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="ie=edge">
+  <meta 
+    name="theme-color" 
+    content="#fff" 
+    id="theme-color">
+  <meta 
+    name="description" 
+    content="BBit">
+  <link 
+    rel="icon" 
+    href="/">
+  <title>How to Install the Latest ImageMagick on Ubuntu</title>
+  
+    
+      <meta 
+        property="og:title" 
+        content="How to Install the Latest ImageMagick on Ubuntu">
+    
+    
+      <meta 
+        property="og:url" 
+        content="https://bbit.wankv.com/2023/01/13/How-to-Install-the-Latest-ImageMagick-on-Ubuntu/index.html">
+    
+    
+    
+    
+      <meta 
+        property="og:type" 
+        content="article">
+      <meta 
+        property="og:article:published_time" 
+        content="2023-01-13">
+      <meta 
+        property="og:article:modified_time" 
+        content="2023-01-13">
+      <meta 
+        property="og:article:author" 
+        content="YL">
+      
+        
+          <meta 
+            property="og:article:tag" 
+            content="Ubuntu">
+        
+          <meta 
+            property="og:article:tag" 
+            content="ImageMagick">
+        
+      
+    
+  
+  
+  <link rel="preload" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css" as="style" >
+  <link rel="preload" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css" as="style" >
+  <link rel="preload" href="/css/main.css" as="style" >
+  
+  <link rel="modulepreload" href="//instant.page/5.1.0">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1946621_i1kgafibvw.css">
+  
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1952792_89b4ac4k4up.css">
+  
+  
+  
+    <link rel="stylesheet" href="/js/lib/lightbox/baguetteBox.min.css">
+  
+  <script>
+    function loadScript(url, cb) {
+      var script = document.createElement('script');
+      script.src = url;
+      if (cb) script.onload = cb;
+      script.async = true;
+      document.body.appendChild(script);
+    }
+    function loadCSS(href, data, attr) {
+      var sheet = document.createElement('link');
+      sheet.ref = 'stylesheet';
+      sheet.href = href;
+      sheet.dataset[data] = attr;
+      document.head.appendChild(sheet);
+    }
+    function changeCSS(cssFile, data, attr) {
+      var oldlink = document.querySelector(data);
+      var newlink = document.createElement("link");
+      newlink.setAttribute("rel", "stylesheet");
+      newlink.setAttribute("href", cssFile);
+      newlink.dataset.prism = attr;
+      document.head.replaceChild(newlink, oldlink);
+    }
+  </script>
+  
+    
+  
+  <script>
+    // control reverse button
+    var reverseDarkList = {
+      dark: 'light',
+      light: 'dark'
+    };
+    var themeColor = {
+      dark: '#1c1c1e',
+      light: '#fff'
+    }
+    // get the data of css prefers-color-scheme
+    var getCssMediaQuery = function() {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    };
+    // reverse current darkmode setting function
+    var reverseDarkModeSetting = function() {
+      var setting = localStorage.getItem('user-color-scheme');
+      if(reverseDarkList[setting]) {
+        setting = reverseDarkList[setting];
+      } else if(setting === null) {
+        setting = reverseDarkList[getCssMediaQuery()];
+      } else {
+        return;
+      }
+      localStorage.setItem('user-color-scheme', setting);
+      return setting;
+    };
+    // apply current darkmode setting
+  </script>
+  
+    <script>
+      var setDarkmode = function(mode) {
+      var setting = mode || localStorage.getItem('user-color-scheme');
+      if(setting === getCssMediaQuery()) {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else if(reverseDarkList[setting]) {
+        document.documentElement.setAttribute('data-user-color-scheme', setting);
+        document.getElementById('theme-color').content = themeColor[setting];
+        document.getElementById('theme-color').dataset.mode = setting;
+      } else {
+        document.documentElement.removeAttribute('data-user-color-scheme');
+        localStorage.removeItem('user-color-scheme');
+        document.getElementById('theme-color').content = themeColor[getCssMediaQuery()];
+        document.getElementById('theme-color').dataset.mode = getCssMediaQuery();
+      }
+    };
+    setDarkmode();
+    </script>
+  
+  
+  
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.js" as="script">
+    <link rel="preload" href="/js/lib/lightbox/baguetteBox.min.css" as="style" >
+  
+  
+    <link rel="preload" href="/js/lib/lozad.min.js" as="script">
+  
+  
+  
+  
+  
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+  <body>
+    <div class="wrapper">
+       
+      <nav class="navbar">
+  <div class="navbar-logo">
+    <a class="navbar-logo-main" href="/">
+      
+      <span class="navbar-logo-dsc">BBit</span>
+      </a>
+  </div>
+  <div class="navbar-menu">
+    
+      <a 
+        href="/" 
+        class="navbar-menu-item">
+        
+          Home
+        
+      </a>
+    
+      <a 
+        href="/archives" 
+        class="navbar-menu-item">
+        
+          Archive
+        
+      </a>
+    
+      <a 
+        href="/tags" 
+        class="navbar-menu-item">
+        
+          Tags
+        
+      </a>
+    
+      <a 
+        href="/categories" 
+        class="navbar-menu-item">
+        
+          Categories
+        
+      </a>
+    
+      <a 
+        href="/links" 
+        class="navbar-menu-item">
+        
+          Friends
+        
+      </a>
+    
+    <button 
+      class="navbar-menu-item darknavbar navbar-menu-btn" 
+      aria-label="Toggle dark mode"
+      id="dark">
+      <i class="iconfont icon-weather"></i>
+    </button>
+    <button 
+      class="navbar-menu-item searchnavbar navbar-menu-btn" 
+      aria-label="Toggle search"
+      id="search">
+      <!-- <i 
+        class="iconfont icon-search" 
+        style="font-size: 1.2rem; font-weight: 400;">
+      </i> -->
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img"
+        class="iconify iconify--ion" width="28" height="28" preserveAspectRatio="xMidYMid meet" viewBox="0 0 512 512">
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M256 80a176 176 0 1 0 176 176A176 176 0 0 0 256 80Z"></path>
+        <path fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="28"
+          d="M232 160a72 72 0 1 0 72 72a72 72 0 0 0-72-72Z"></path>
+        <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-miterlimit="10" stroke-width="28"
+          d="M283.64 283.64L336 336"></path>
+      </svg>
+    </button>
+  </div>
+</nav> 
+      
+      <div 
+        id="local-search" 
+        style="display: none">
+        <input
+          class="navbar-menu-item"
+          id="search-input"
+          placeholder="请输入搜索内容..." />
+        <div id="search-content"></div>
+      </div>
+      
+      <div class="section-wrap">
+        <div class="container">
+          <div class="columns">
+            <aside class="left-column">
+              
+              <div class="card card-author">
+                
+
+
+<div class="author-message">
+  <a 
+    class="author-posts-count" 
+    href="/archives">
+    <span>2</span>
+    <span>Posts</span>
+  </a>
+  <a 
+    class="author-categories-count" 
+    href="/categories">
+    <span>2</span>
+    <span>Categories</span>
+  </a>
+  <a 
+    class="author-tags-count" 
+    href="/tags">
+    <span>3</span>
+    <span>Tags</span>
+  </a>
+</div>
+
+
+              </div>
+               <div class="sticky-tablet">
+  
+  
+    <article class="display-when-two-columns spacer">
+      <div class="card card-content toc-card">
+        <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-latest-version-of-ImageMagick-from-the-source-code"><span class="toc-text">Install latest version of ImageMagick from the source code</span></a></li></ol>
+      </div>
+    </article>
+  
+  
+  <article class="card card-content categories-widget">
+    <div class="categories-card">
+  <div class="categories-header">
+    <i 
+      class="iconfont icon-fenlei" 
+      style="padding-right: 2px;">
+    </i>Categories
+  </div>
+  <div class="categories-list">
+    
+      <a href="/categories/Linux/">
+        <div class="categories-list-item">
+          Linux
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+      <a href="/categories/Rails/">
+        <div class="categories-list-item">
+          Rails
+          <span class="categories-list-item-badge">1</span>
+        </div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  <article class="card card-content tags-widget">
+    <div class="tags-card">
+  <div class="tags-header">
+    <i 
+      class="iconfont icon-biaoqian" 
+      style="padding-right: 2px;">
+    </i>hot tags
+  </div>
+  <div class="tags-list">
+    
+      <a 
+        href="/tags/Rails/" 
+        title="Rails">
+        <div class="tags-list-item">Rails</div>
+      </a>
+    
+      <a 
+        href="/tags/ImageMagick/" 
+        title="ImageMagick">
+        <div class="tags-list-item">ImageMagick</div>
+      </a>
+    
+      <a 
+        href="/tags/Ubuntu/" 
+        title="Ubuntu">
+        <div class="tags-list-item">Ubuntu</div>
+      </a>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+            <main class="main-column">
+              
+<article class="card card-content">
+  <header>
+    <h1 class="post-title">
+      How to Install the Latest ImageMagick on Ubuntu
+    </h1>
+  </header>
+  <div class="post-meta post-show-meta">
+    <time datetime="2023-01-13T15:01:32.000Z">
+      <i 
+        class="iconfont icon-calendar" 
+        style="margin-right: 2px;">
+      </i>
+      <span>2023-01-13</span>
+    </time>
+    
+      <span class="dot"></span>
+      
+        <a 
+          href="/categories/Linux/" 
+          class="post-meta-link">
+          Linux
+        </a>
+      
+    
+    
+      <span class="dot"></span>
+      <span>558 words</span>
+    
+  </div>
+  
+    <div 
+      class="post-meta post-show-meta" 
+      style="margin-top: -10px;">
+      <div style="display: flex; align-items: center;">
+        <i 
+          class="iconfont icon-biaoqian" 
+          style="margin-right: 2px; font-size: 1.15rem;">
+        </i>
+        
+          
+          <a 
+            href="/tags/Ubuntu/" 
+            class="post-meta-link">
+            Ubuntu
+          </a>
+        
+          
+            <span class="dot"></span>
+          
+          <a 
+            href="/tags/ImageMagick/" 
+            class="post-meta-link">
+            ImageMagick
+          </a>
+        
+      </div>
+    </div>
+  
+  </header>
+  <div 
+    id="section" 
+    class="post-content">
+    <p>ImageMagick is a popular open-source software that allows you to manipulate digital images in almost every way and supports more than 200 image formats!!</p>
+<p>The <em><strong>chances that ImageMagick has already been installed on your Ubuntu system are pretty high</strong></em> as many other software use it as a dependency. Verify it with:</p>
+<pre class="highlight"><span class="line">convert -version</span><br></pre>
+
+<p>Yes. ImageMagick is a CLI tool and <strong>it is used as convert, not imagemagick in the terminal</strong>. That’s where a lot of users make mistake.</p>
+<p>If you see the “convert command not found” error, you can install ImageMagick using this command in Ubuntu:</p>
+<pre class="highlight"><span class="line">sudo apt install imagemagick</span><br></pre>
+
+<p>But it may not give you the latest version. Let’s see how to get ImageMagick in detail and how to install the latest version from the source code.</p>
+<h2 id="Install-latest-version-of-ImageMagick-from-the-source-code"><a href="#Install-latest-version-of-ImageMagick-from-the-source-code" class="headerlink" title="Install latest version of ImageMagick from the source code"></a>Install latest version of ImageMagick from the source code</h2><p>First, you’d need some dependencies to download and compile ImageMagick, a development environment is required by the ImageMagick like a compiler and other required development tools, so you need to install build-essentials tools using the command given below:</p>
+<pre class="highlight"><span class="line">sudo apt-get install -y \</span><br><span class="line">  build-essential \</span><br><span class="line">  libde265-dev \</span><br><span class="line">  libdjvulibre-dev \</span><br><span class="line">  libfftw3-dev \</span><br><span class="line">  libghc-bzlib-dev \</span><br><span class="line">  libgoogle-perftools-dev \</span><br><span class="line">  libgraphviz-dev \</span><br><span class="line">  libgs-dev \</span><br><span class="line">  libheif-dev \</span><br><span class="line">  libjbig-dev \</span><br><span class="line">  libjemalloc-dev \</span><br><span class="line">  libjpeg-dev \</span><br><span class="line">  liblcms2-dev \</span><br><span class="line">  liblqr-1-0-dev \</span><br><span class="line">  liblzma-dev \</span><br><span class="line">  libopenexr-dev \</span><br><span class="line">  libopenjp2-7-dev \</span><br><span class="line">  libpango1.0-dev \</span><br><span class="line">  libraqm-dev \</span><br><span class="line">  libraw-dev \</span><br><span class="line">  librsvg2-dev \</span><br><span class="line">  libtiff-dev \</span><br><span class="line">  libwebp-dev \</span><br><span class="line">  libwmf-dev \</span><br><span class="line">  libxml2-dev \</span><br><span class="line">  libzip-dev \</span><br><span class="line">  libzstd-dev</span><br></pre>
+
+<p>The next step is to download the source files of ImageMagick from the official website of ImageMagick by typing the command provided below:</p>
+<pre class="highlight"><span class="line">wget https://imagemagick.org/archive/ImageMagick.tar.gz</span><br></pre>
+
+<p>After downloading the ImageMagick source file is completed, extract it using the command given below:</p>
+<pre class="highlight"><span class="line">tar xzvf ImageMagick.tar.gz</span><br></pre>
+
+<p>After the extraction of the ImageMagick package, move to the ImageMagick directory by using the “cd” command:</p>
+<pre class="highlight"><span class="line">cd ImageMagick-7.1.0</span><br></pre>
+
+<p>Alright, now to perform the compilation of ImageMagick and configuration, type the command given below:</p>
+<pre class="highlight"><span class="line">./configure \</span><br><span class="line">  --with-bzlib=<span class="built_in">yes</span> \</span><br><span class="line">  --with-djvu=<span class="built_in">yes</span> \</span><br><span class="line">  --with-dps=<span class="built_in">yes</span> \</span><br><span class="line">  --with-fftw=<span class="built_in">yes</span> \</span><br><span class="line">  --with-flif=<span class="built_in">yes</span> \</span><br><span class="line">  --with-fontconfig=<span class="built_in">yes</span> \</span><br><span class="line">  --with-fpx=<span class="built_in">yes</span> \</span><br><span class="line">  --with-freetype=<span class="built_in">yes</span> \</span><br><span class="line">  --with-gslib=<span class="built_in">yes</span> \</span><br><span class="line">  --with-gvc=<span class="built_in">yes</span> \</span><br><span class="line">  --with-heic=<span class="built_in">yes</span> \</span><br><span class="line">  --with-jbig=<span class="built_in">yes</span> \</span><br><span class="line">  --with-jemalloc=<span class="built_in">yes</span> \</span><br><span class="line">  --with-jpeg=<span class="built_in">yes</span> \</span><br><span class="line">  --with-jxl=<span class="built_in">yes</span> \</span><br><span class="line">  --with-lcms=<span class="built_in">yes</span> \</span><br><span class="line">  --with-lqr=<span class="built_in">yes</span> \</span><br><span class="line">  --with-lzma=<span class="built_in">yes</span> \</span><br><span class="line">  --with-magick-plus-plus=<span class="built_in">yes</span> \</span><br><span class="line">  --with-openexr=<span class="built_in">yes</span> \</span><br><span class="line">  --with-openjp2=<span class="built_in">yes</span> \</span><br><span class="line">  --with-pango=<span class="built_in">yes</span> \</span><br><span class="line">  --with-perl=<span class="built_in">yes</span> \</span><br><span class="line">  --with-png=<span class="built_in">yes</span> \</span><br><span class="line">  --with-raqm=<span class="built_in">yes</span> \</span><br><span class="line">  --with-raw=<span class="built_in">yes</span> \</span><br><span class="line">  --with-rsvg=<span class="built_in">yes</span> \</span><br><span class="line">  --with-tcmalloc=<span class="built_in">yes</span> \</span><br><span class="line">  --with-tiff=<span class="built_in">yes</span> \</span><br><span class="line">  --with-webp=<span class="built_in">yes</span> \</span><br><span class="line">  --with-wmf=<span class="built_in">yes</span> \</span><br><span class="line">  --with-x=<span class="built_in">yes</span> \</span><br><span class="line">  --with-xml=<span class="built_in">yes</span> \</span><br><span class="line">  --with-zip=<span class="built_in">yes</span> \</span><br><span class="line">  --with-zlib=<span class="built_in">yes</span> \</span><br><span class="line">  --with-zstd=<span class="built_in">yes</span> \</span><br><span class="line">  --with-gcc-arch=native</span><br></pre>
+
+<p>Now, it’s time to use <code>make</code> the command to build what we’ve configured previously.</p>
+<pre class="highlight"><span class="line">make</span><br></pre>
+
+<p>If ImageMagick configured and compiled without complaint, you are ready to install it on your system. Administrator privileges are required to install. To install, type the command given below:</p>
+<pre class="highlight"><span class="line">sudo make install</span><br></pre>
+
+<p>You may need to configure the dynamic linker run-time bindings:</p>
+<pre class="highlight"><span class="line">sudo ldconfig /usr/local/lib</span><br></pre>
+
+<p>Finally, verify the ImageMagick install worked properly, type</p>
+<pre class="highlight"><span class="line">/usr/local/bin/convert logo: logo.gif</span><br></pre>
+
+<p>So which version of ImageMagick, you’d get after going through this long process? Well, let me show you the installed version of ImageMagick after going through this process.</p>
+<pre class="highlight"><span class="line">convert -version</span><br></pre>
+
+  </div>
+  <div>
+    
+  </div>
+</article>
+<div class="nav">
+  
+  
+    <div class="nav-item-next">
+      <a 
+        href="/2023/01/13/install-ruby-on-rails-on-macos/" 
+        class="nav-link">
+        <div>
+          <div class="nav-label">Next</div>
+          
+            <div class="nav-title">Install Ruby On Rails on macOS </div>
+          
+        </div>
+        <i class="iconfont icon-right nav-next-icon"></i>
+      </a>
+    </div>
+  
+</div>
+
+<div 
+  class="card card-content toc-card" 
+  id="mobiletoc">
+  <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-latest-version-of-ImageMagick-from-the-source-code"><span class="toc-text">Install latest version of ImageMagick from the source code</span></a></li></ol>
+</div>
+            </main>
+            <aside class="right-column">
+              <div class="sticky-widescreen">
+  
+  
+    <article class="card card-content toc-card">
+      <div class="toc-header">
+  <i 
+    class="iconfont icon-menu" 
+    style="padding-right: 2px;">
+  </i>TOC
+</div>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-latest-version-of-ImageMagick-from-the-source-code"><span class="toc-text">Install latest version of ImageMagick from the source code</span></a></li></ol>
+    </article>
+  
+  
+  <article class="card card-content">
+    <div class="recent-posts-card">
+  <div class="recent-posts-header">
+    <i 
+      class="iconfont icon-wenzhang_huaban" 
+      style="padding-right: 2px;">
+    </i>Recent Posts
+  </div>
+  <div class="recent-posts-list">
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-01-13</div>
+        <a href="/2023/01/13/How-to-Install-the-Latest-ImageMagick-on-Ubuntu/"><div class="recent-posts-item-content">How to Install the Latest ImageMagick on Ubuntu</div></a>
+      </div>
+    
+      <div class="recent-posts-item">
+        <div class="recent-posts-item-title">2023-01-13</div>
+        <a href="/2023/01/13/install-ruby-on-rails-on-macos/"><div class="recent-posts-item-content">Install Ruby On Rails on macOS</div></a>
+      </div>
+    
+  </div>
+</div>
+  </article>
+  
+  
+</div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </div>
+     
+    <footer class="footer">
+  <div class="footer-container">
+    <div>
+      <div class="footer-dsc">
+        <span>
+          Copyright ©
+          
+            2020
+          
+          
+                - 
+                2023
+          
+        </span>
+        &nbsp;
+        <a 
+          href="/" 
+          class="footer-link">
+          BBit
+        </a>
+      </div>
+    </div>
+
+    
+      <div class="footer-dsc">
+        
+          Powered by
+          <a 
+            href="https://hexo.io/" 
+            class="footer-link" 
+            target="_blank" 
+            rel="nofollow noopener noreferrer">
+            &nbsp;Hexo
+          </a>
+        
+        
+          <span>&nbsp;|&nbsp;</span>
+        
+        
+          Theme -
+          <a 
+            href="https://github.com/theme-kaze" 
+            class="footer-link" 
+            target="_blank"
+            rel="nofollow noopener noreferrer">
+            &nbsp;Kaze
+          </a>
+        
+      </div>
+    
+    
+    
+    
+</footer>
+ 
+    
+  <a 
+    role="button" 
+    id="scrollbutton" 
+    class="basebutton" 
+    aria-label="回到顶部">
+    <i class="iconfont icon-arrowleft button-icon"></i>
+  </a>
+
+<a 
+  role="button" 
+  id="menubutton"
+  aria-label="menu button"
+  class="basebutton">
+  <i class="iconfont icon-menu button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="popbutton" 
+  class="basebutton" 
+  aria-label="控制中心">
+  <i class="iconfont icon-expand button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="darkbutton" 
+  class="basebutton darkwidget" 
+  aria-label="夜色模式">
+  <i class="iconfont icon-weather button-icon"></i>
+</a>
+<a 
+  role="button" 
+  id="searchbutton" 
+  class="basebutton searchwidget" 
+  aria-label="搜索">
+  <i class="iconfont icon-search button-icon"></i>
+</a> 
+     
+     
+     
+      <script>
+  var addImgLayout = function () {
+    var img = document.querySelectorAll('.post-content img')
+    var i
+    for (i = 0; i < img.length; i++) {
+      var wrapper = document.createElement('a')
+      wrapper.setAttribute('href', img[i].getAttribute('data-src'))
+      wrapper.setAttribute('aria-label', 'illustration')
+      wrapper.style.cssText =
+        'width: 100%; display: flex; justify-content: center;'
+      if (img[i].alt) wrapper.dataset.caption = img[i].alt
+      wrapper.dataset.nolink = true
+      img[i].before(wrapper)
+      wrapper.append(img[i])
+      var divWrap = document.createElement('div')
+      divWrap.classList.add('gallery')
+      wrapper.before(divWrap)
+      divWrap.append(wrapper)
+    }
+    baguetteBox.run('.gallery')
+  }
+</script>
+<script>
+  loadScript(
+    "/js/lib/lightbox/baguetteBox.min.js",
+    addImgLayout
+  )
+</script>
+ 
+     
+     
+    <script src="/js/main.js"></script> 
+     
+    
+      <script>
+        var addLazyload = function () {
+          var observer = lozad('.lozad', {
+            load: function (el) {
+              el.srcset = el.getAttribute('data-src')
+            },
+            loaded: function (el) {
+              el.classList.add('loaded')
+            },
+          })
+          observer.observe()
+        }
+      </script>
+      <script>
+        loadScript('/js/lib/lozad.min.js', addLazyload)
+      </script>
+    
+    <script src="//instant.page/5.1.0" type="module"
+      integrity="sha384-by67kQnR+pyfy8yWP4kPO12fHKRLHZPfEsiSXR8u2IKcTdxD805MGUXBzVPnkLHw"></script>
+    
+    
+  </body>
+</html>
